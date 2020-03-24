@@ -1,0 +1,6 @@
+framework module Pods_SeatGeekEventsTests {
+  umbrella header "Pods-SeatGeekEventsTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
