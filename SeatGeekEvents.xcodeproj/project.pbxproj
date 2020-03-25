@@ -10,7 +10,6 @@
 		112AFEC3242A4E48006CE3F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112AFEC2242A4E48006CE3F8 /* AppDelegate.swift */; };
 		112AFECA242A4E48006CE3F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112AFEC9242A4E48006CE3F8 /* Assets.xcassets */; };
 		112AFECD242A4E48006CE3F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112AFECB242A4E48006CE3F8 /* LaunchScreen.storyboard */; };
-		112AFED8242A4E48006CE3F8 /* SeatGeekEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112AFED7242A4E48006CE3F8 /* SeatGeekEventsTests.swift */; };
 		112AFEE3242A4E48006CE3F8 /* SeatGeekEventsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112AFEE2242A4E48006CE3F8 /* SeatGeekEventsUITests.swift */; };
 		112AFEF3242A4FEA006CE3F8 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112AFEF1242A4FEA006CE3F8 /* SearchResultTableViewCell.swift */; };
 		112AFEF4242A4FEA006CE3F8 /* SearchResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 112AFEF2242A4FEA006CE3F8 /* SearchResultTableViewCell.xib */; };
@@ -84,7 +83,6 @@
 		112AFECC242A4E48006CE3F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		112AFECE242A4E48006CE3F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		112AFED3242A4E48006CE3F8 /* SeatGeekEventsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SeatGeekEventsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		112AFED7242A4E48006CE3F8 /* SeatGeekEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatGeekEventsTests.swift; sourceTree = "<group>"; };
 		112AFED9242A4E48006CE3F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		112AFEDE242A4E48006CE3F8 /* SeatGeekEventsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SeatGeekEventsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		112AFEE2242A4E48006CE3F8 /* SeatGeekEventsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatGeekEventsUITests.swift; sourceTree = "<group>"; };
@@ -204,7 +202,6 @@
 				11C1A4FF242BF41600C78535 /* Favorites */,
 				11C1A4F6242BF08600C78535 /* Parsing */,
 				11C1A4F5242BEE4200C78535 /* Networking */,
-				112AFED7242A4E48006CE3F8 /* SeatGeekEventsTests.swift */,
 				112AFED9242A4E48006CE3F8 /* Info.plist */,
 			);
 			path = SeatGeekEventsTests;
@@ -637,7 +634,6 @@
 				11C1A4F4242BEBF300C78535 /* EventsRouteMocks.swift in Sources */,
 				11C1A4FC242BF33100C78535 /* Event.swift in Sources */,
 				11C1A4FA242BF23000C78535 /* EventsParsingTests.swift in Sources */,
-				112AFED8242A4E48006CE3F8 /* SeatGeekEventsTests.swift in Sources */,
 				11C1A4EB242BE63300C78535 /* EventsNetworkingServiceTest.swift in Sources */,
 				11C1A4E5242BE1B500C78535 /* FavoritesProtocol.swift in Sources */,
 				11C1A4EF242BE7B200C78535 /* EventsURLProtocolMock.swift in Sources */,

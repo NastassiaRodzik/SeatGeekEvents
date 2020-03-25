@@ -14,8 +14,7 @@ struct EventsResponse: Codable {
 
 struct Event: Codable {
     let identifier: Int
-    let title: String?
-    let shortTitle: String?
+    let title: String
     let venue: Venue?
     let dateTime: String?
     let timeIsNotDetermined: Bool? 
@@ -27,7 +26,6 @@ extension Event {
     private enum CodingKeys : String, CodingKey {
         case identifier = "id"
         case title
-        case shortTitle = "short_title"
         case venue
         case dateTime = "datetime_local"
         case timeIsNotDetermined = "time_tbd"

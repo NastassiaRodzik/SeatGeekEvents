@@ -18,7 +18,7 @@ final class EventViewController: UIViewController {
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var favouriteButton: UIButton!
     
-    let viewModel: EventViewModel
+    private let viewModel: EventViewModel
     private let disposeBag = DisposeBag()
     
     init(viewModel: EventViewModel) {

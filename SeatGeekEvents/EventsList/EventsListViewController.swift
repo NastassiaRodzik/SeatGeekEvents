@@ -67,7 +67,7 @@ extension EventsListViewController: UITableViewDelegate {
             viewModel.loadNewPage()
         }
     }
-    
+   
 }
 
 // MARK: - UISearchBarDelegate

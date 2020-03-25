@@ -47,7 +47,7 @@ final class SearchResultTableViewCell: UITableViewCell {
             guard image != nil else { return }
             self?.eventImageView.image = image
         }
-        [favoriteFlagDisposable, imageDisposable].forEach({ $0.dispose(in: disposeBag)  })
+        [favoriteFlagDisposable, imageDisposable].forEach({ $0.dispose(in: disposeBag) })
     }
     
 }

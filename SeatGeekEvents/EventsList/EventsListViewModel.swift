@@ -36,12 +36,13 @@ final class EventsListViewModel: EventsListViewModelProtocol {
     init() {
         let searchStringDisposable = searchString
             .debounce(for: 0.5)
+            .removeDuplicates()
             .observeNext { [unowned self] text in
-            guard let text = text else {
-                self.events.removeAll()
-                return
-            }
-            self.loadEvents(with: text)
+                guard let text = text else {
+                    self.events.removeAll()
+                    return
+                }
+                self.loadEvents(with: text)
         }
         
         let indexPathDisposable = selectedIndexPath.observeNext(with: { [unowned self] indexPath in
@@ -70,9 +71,8 @@ final class EventsListViewModel: EventsListViewModelProtocol {
             self.events.removeAll()
             return
         }
-        print("loading events with \(searchString) page \(page)")
-        EventsClient().loadData(searchString: searchString, page: page) { [weak self] (data, error) in
-            guard let self = self else { return }
+        
+        EventsClient().loadData(searchString: searchString, page: page) { [unowned self] (data, error) in
             if let error = error {
                 self.error.value = error
                 return

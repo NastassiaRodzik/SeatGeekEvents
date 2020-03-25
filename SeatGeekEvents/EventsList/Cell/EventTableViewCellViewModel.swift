@@ -15,7 +15,7 @@ protocol EventViewModelProtocol {
     var title: String { get }
     var location: String { get }
     var time: String { get }
-    var isFavorite: Observable<Bool> { get set }
+    var isFavorite: Observable<Bool> { get }
     var image: Observable<UIImage?> { get }
     
 }
@@ -46,15 +46,15 @@ final class EventTableViewCellViewModel: EventViewModelProtocol {
     }
     
     let identifier: Int
-    var title: String
-    var location: String
-    var time: String
-    var isFavorite: Observable<Bool>
+    let title: String
+    let location: String
+    let time: String
+    let isFavorite: Observable<Bool>
     let image: Observable<UIImage?> = Observable<UIImage?>(nil)
     
     init(event: Event, favoritesManager: FavoritesHandler = FavoritesManager()) {
         self.identifier = event.identifier
-        self.title = event.title ?? ""
+        self.title = event.title
         self.isFavorite = Observable<Bool>(favoritesManager.isFavorite(eventIdentifier: event.identifier))
         self.location = event.venue?.location ?? ""
         if let timeRawString = event.dateTime {
