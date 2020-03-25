@@ -34,6 +34,19 @@ final class EventsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = SearchResultTableViewCell.rowHeight
         tableView.accessibilityIdentifier = "EventsTableView"
+        tableView.delegate = self
     }
 
+}
+
+extension EventsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let totalEventsNumber = viewModel.events.count
+        let prefetchRowsNumber = 3
+        if indexPath.row > totalEventsNumber - prefetchRowsNumber {
+            viewModel.loadNewPage()
+        }
+    }
+    
 }

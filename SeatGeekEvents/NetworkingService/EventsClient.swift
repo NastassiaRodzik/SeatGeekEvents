@@ -9,12 +9,12 @@
 import Foundation
 
 protocol EventsClientProtocol {
-    func loadData(searchString: String, completion: @escaping (Data?, Error?) -> Void)
+    func loadData(searchString: String, page: Int, completion: @escaping (Data?, Error?) -> Void)
 }
 
 class EventsClient: NetworkClient, EventsClientProtocol {
-    func loadData(searchString: String, completion: @escaping (Data?, Error?) -> Void) {
-        let route = EventsRoute(searchString: searchString)
+    func loadData(searchString: String, page: Int, completion: @escaping (Data?, Error?) -> Void) {
+        let route = EventsRoute(searchString: searchString, page: page)
         performRequest(route: route, session: URLSession.shared, completion: completion)
     }
 }

@@ -20,6 +20,7 @@ private enum Server {
     enum Parameter {
         static let clientId = "client_id"
         static let searchString = "q"
+        static let page = "page"
     }
     
     enum SeatGeekConstants {
@@ -35,8 +36,8 @@ struct EventsRoute: NetworkRouter {
     let path: String = Server.PathComponent.events
     let parametersString: String
     
-    init(searchString: String ) {
-        parametersString = "?\(Server.Parameter.clientId)=\(Server.SeatGeekConstants.clientId)&\(Server.Parameter.searchString)=\(searchString)"
+    init(searchString: String, page: Int) {
+        parametersString = "?\(Server.Parameter.clientId)=\(Server.SeatGeekConstants.clientId)&\(Server.Parameter.searchString)=\(searchString)&\(Server.Parameter.page)=\(page)"
     }
 
 }
