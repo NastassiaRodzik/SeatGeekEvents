@@ -18,7 +18,7 @@ struct Event: Codable {
     let shortTitle: String?
     let venue: Venue?
     let dateTime: String?
-    let timeIsNotDetermined: Bool? // do not show time if yes
+    let timeIsNotDetermined: Bool? 
     let performers: [Performer]?
     
 }

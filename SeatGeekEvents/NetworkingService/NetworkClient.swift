@@ -18,7 +18,6 @@ class NetworkClient: NetworkClientProtocol {
 
         do {
             let request = try route.asURLRequest()
-            
             session.dataTask(with: request) { (data, response, error) in
                 guard error == nil else {
                     completion(nil, error)

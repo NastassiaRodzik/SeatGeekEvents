@@ -52,9 +52,7 @@ final class EventTableViewCellViewModel: EventViewModelProtocol {
     var isFavorite: Observable<Bool>
     let image: Observable<UIImage?> = Observable<UIImage?>(nil)
     
-    private let favoritesManager = FavoritesManager()
-    
-    init(event: Event) {
+    init(event: Event, favoritesManager: FavoritesHandler = FavoritesManager()) {
         self.identifier = event.identifier
         self.title = event.title ?? ""
         self.isFavorite = Observable<Bool>(favoritesManager.isFavorite(eventIdentifier: event.identifier))

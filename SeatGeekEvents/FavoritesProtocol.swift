@@ -9,6 +9,9 @@
 import Foundation
 
 protocol FavoritesHandler {
+    
+    init(favoritesDataStore: FavoritesDataStore)
+    
     func isFavorite(eventIdentifier: Int) -> Bool
     
     func makeFavorite(eventIdentifier: Int)

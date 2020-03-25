@@ -13,7 +13,7 @@ class FavoritesManager: FavoritesHandler {
     private let favoritesStore: FavoritesDataStore
     private var favoriteEventIds: [Int]
     
-    init(favoritesDataStore: FavoritesDataStore = UserDefaultsFavoritesDataStore()) {
+    required init(favoritesDataStore: FavoritesDataStore = UserDefaultsFavoritesDataStore()) {
         favoritesStore = favoritesDataStore
         favoriteEventIds = favoritesDataStore.getAllFavorites()
     }
