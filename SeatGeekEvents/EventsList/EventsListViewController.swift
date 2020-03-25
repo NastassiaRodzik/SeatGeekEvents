@@ -31,6 +31,7 @@ final class EventsListViewController: UIViewController {
         
         setupTableView()
 
+        searchBar.delegate = self
         searchBar.reactive.text
             .bind(to: viewModel.searchString)
             .dispose(in: disposeBag)
@@ -54,7 +55,6 @@ final class EventsListViewController: UIViewController {
         tableView.delegate = self
     }
 
-
 }
 
 // MARK - UITableViewDelegate
@@ -68,4 +68,13 @@ extension EventsListViewController: UITableViewDelegate {
         }
     }
     
+}
+
+// MARK: - UISearchBarDelegate
+extension EventsListViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        viewModel.searchString.value = nil
+        searchBar.resignFirstResponder()
+    }
 }

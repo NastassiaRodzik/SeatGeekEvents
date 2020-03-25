@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveKit
 
 final class SearchResultTableViewCell: UITableViewCell {
     
@@ -20,6 +21,8 @@ final class SearchResultTableViewCell: UITableViewCell {
     static var reuseIdentifier: String {
         return String(describing: self)
     }
+    
+    private let disposeBag = DisposeBag()
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -35,15 +38,16 @@ final class SearchResultTableViewCell: UITableViewCell {
         eventTitleLabel.text = eventViewModel.title
         eventLocationLabel.text = eventViewModel.location
         eventTimeLabel.text = eventViewModel.time
-        let _ = eventViewModel.isFavorite.observeNext { [weak self] isFavorite in
+        let favoriteFlagDisposable = eventViewModel.isFavorite.observeNext { [weak self] isFavorite in
             self?.favouriteImageView.isHidden = !isFavorite
         }
         let defaultImage = UIImage(named: "placeholder")
         eventImageView.image = defaultImage
-        let _ = eventViewModel.image.observeNext { [weak self] image in
+        let imageDisposable = eventViewModel.image.observeNext { [weak self] image in
             guard image != nil else { return }
             self?.eventImageView.image = image
         }
+        [favoriteFlagDisposable, imageDisposable].forEach({ $0.dispose(in: disposeBag)  })
     }
     
 }

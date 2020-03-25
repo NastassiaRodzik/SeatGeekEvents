@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveKit
 
 final class EventViewController: UIViewController {
 
@@ -18,6 +19,7 @@ final class EventViewController: UIViewController {
     @IBOutlet private weak var favouriteButton: UIButton!
     
     let viewModel: EventViewModel
+    private let disposeBag = DisposeBag()
     
     init(viewModel: EventViewModel) {
         self.viewModel = viewModel
@@ -32,28 +34,30 @@ final class EventViewController: UIViewController {
         super.viewDidLoad()
 
         configureInterface()
-        let _ = viewModel.isFavorite.observeNext { [unowned self] isFavourite in
+        let favoriteFlagDisposable = viewModel.isFavorite.observeNext { [unowned self] isFavourite in
             let favoriteEventButtonImage = UIImage(named: "heart_on")
             let unfavoriteEventButtonImage = UIImage(named: "heart_off")
             
             let favouriteButtonImage = isFavourite ? favoriteEventButtonImage : unfavoriteEventButtonImage
             self.favouriteButton.setImage(favouriteButtonImage, for: .normal)
         }
-        let _ = favouriteButton.reactive.controlEvents(.touchUpInside).observeNext { [unowned self] _ in
+        let favoriteButtonActionDisposable = favouriteButton.reactive.controlEvents(.touchUpInside).observeNext { [unowned self] _ in
             self.viewModel.favouriteButtonTapped()
         }
+        [favoriteFlagDisposable, favoriteButtonActionDisposable].forEach({ $0.dispose(in: disposeBag) })
     }
 
     private func configureInterface() {
         titleLabel.text = viewModel.eventViewModel.title
         dateLabel.text = viewModel.eventViewModel.time
         locationLabel.text = viewModel.eventViewModel.location
-        let _ = viewModel.eventViewModel.image.observeNext { [weak self] image in
+        let imageDisposable = viewModel.eventViewModel.image.observeNext { [weak self] image in
             self?.imageView.image = image
         }
-        let _ = closeButton.reactive.controlEvents(.touchUpInside).observeNext { [unowned self] _ in
+        let closeButtonDisposable = closeButton.reactive.controlEvents(.touchUpInside).observeNext { [unowned self] _ in
             self.dismiss(animated: true, completion: nil)
         }
+        [imageDisposable, closeButtonDisposable].forEach({ $0.dispose(in: disposeBag) })
         
     }
     
