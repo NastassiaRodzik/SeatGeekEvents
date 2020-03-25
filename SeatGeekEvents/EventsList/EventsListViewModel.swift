@@ -11,14 +11,19 @@ import Bond
 
 protocol EventsListViewModelProtocol {
     
-    var searchString: Observable<String?> { get set }
+    var searchString: Observable<String?> { get }
+    var selectedIndexPath: Observable<IndexPath?> { get }
+    var nextEventToDisplay: Observable<EventTableViewCellViewModelProtocol?> { get }
     var events: MutableObservableArray<EventTableViewCellViewModelProtocol> { get }
+    
     func loadNewPage()
 }
 
-class EventsListViewModel: EventsListViewModelProtocol {
-    var searchString: Observable<String?> = Observable<String?>("")
-    var events: MutableObservableArray<EventTableViewCellViewModelProtocol> = MutableObservableArray([])
+final class EventsListViewModel: EventsListViewModelProtocol {
+    let searchString: Observable<String?> = Observable<String?>(nil)
+    let selectedIndexPath: Observable<IndexPath?> = Observable<IndexPath?>(nil)
+    let nextEventToDisplay: Observable<EventTableViewCellViewModelProtocol?> = Observable<EventTableViewCellViewModelProtocol?>(nil)
+    let events: MutableObservableArray<EventTableViewCellViewModelProtocol> = MutableObservableArray([])
     
     var currentPage = 1
     var isNewPageLoading = false
@@ -26,16 +31,31 @@ class EventsListViewModel: EventsListViewModelProtocol {
     init() {
         _ = searchString
             .debounce(for: 0.5)
-            .observeNext {
-            [unowned self] text in
-            guard let text = text else {
-              return
-            }
+            .observeNext { [unowned self] text in
+            guard let text = text else { return }
             self.loadEvents(with: text)
         }
+        
+        _ = selectedIndexPath.observeNext(with: { [unowned self] indexPath in
+            guard let indexPath = indexPath else { return }
+            let nextEvent = self.events[indexPath.row]
+            self.nextEventToDisplay.value = nextEvent
+        })
+
     }
     
-    func loadEvents(with searchString: String, page: Int = 1) {
+    func loadNewPage() {
+        if isNewPageLoading {
+            return
+        }
+        guard let query = searchString.value else {
+            return
+        }
+        isNewPageLoading = true
+        loadEvents(with: query, page: currentPage + 1)
+    }
+    
+    private func loadEvents(with searchString: String, page: Int = 1) {
         guard searchString.count > 0 else {
             self.events.removeAll()
             return
@@ -46,13 +66,6 @@ class EventsListViewModel: EventsListViewModelProtocol {
             if let data = data {
                 if let events = EventsJSONParser().parseItems(from: data) {
                     self.currentPage = page
-                    print("----")
-                    for event in events.events {
-                      
-                        print("event id \(event.identifier) ")
-                        
-                    }
-                    print("----")
                     let eventsViewModels = events.events.map({ EventTableViewCellViewModel(event: $0)})
                     
                     if page == 1 {
@@ -67,16 +80,5 @@ class EventsListViewModel: EventsListViewModelProtocol {
             }
         }
     }
-    
-    func loadNewPage() {
-        if isNewPageLoading {
-            return
-        }
-        guard let query = searchString.value else {
-            return
-        }
-        isNewPageLoading = true
-        loadEvents(with: query, page: currentPage + 1)
-    }
-    
+
 }

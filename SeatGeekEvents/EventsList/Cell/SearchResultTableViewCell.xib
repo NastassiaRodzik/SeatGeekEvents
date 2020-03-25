@@ -57,9 +57,9 @@
                             </stackView>
                         </subviews>
                     </stackView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OeM-SV-QK7" userLabel="Favourite Image View">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heartRed" translatesAutoresizingMaskIntoConstraints="NO" id="OeM-SV-QK7" userLabel="Favourite Image View">
                         <rect key="frame" x="15" y="15" width="20" height="20"/>
-                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="BdX-wx-4mr"/>
                             <constraint firstAttribute="height" constant="20" id="JwI-8m-Y9Y"/>
@@ -86,4 +86,7 @@
             <point key="canvasLocation" x="122" y="177"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="heartRed" width="25" height="24"/>
+    </resources>
 </document>

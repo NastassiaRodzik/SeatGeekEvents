@@ -15,11 +15,11 @@ protocol EventTableViewCellViewModelProtocol {
     var location: String { get }
     var time: String { get }
     var isFavorite: Bool { get set }
-    var image: Observable<UIImage?> { get set }
+    var image: Observable<UIImage?> { get }
     
 }
 
-class EventTableViewCellViewModel: EventTableViewCellViewModelProtocol {
+final class EventTableViewCellViewModel: EventTableViewCellViewModelProtocol {
     
     static var rawEventDateFormatter: DateFormatter {
         let rawStringDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -48,7 +48,7 @@ class EventTableViewCellViewModel: EventTableViewCellViewModelProtocol {
     var location: String
     var time: String
     var isFavorite: Bool
-    var image: Observable<UIImage?> = Observable<UIImage?>(nil)
+    let image: Observable<UIImage?> = Observable<UIImage?>(nil)
     
     init(event: Event) {
         self.title = event.title ?? ""
