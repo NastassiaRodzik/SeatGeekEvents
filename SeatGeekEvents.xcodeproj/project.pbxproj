@@ -32,6 +32,10 @@
 		11C1A4D4242B9D4100C78535 /* EventCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1A4D3242B9D4100C78535 /* EventCoordinator.swift */; };
 		11C1A4D7242BA77000C78535 /* EventsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1A4D5242BA77000C78535 /* EventsListViewController.swift */; };
 		11C1A4D8242BA77000C78535 /* EventsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11C1A4D6242BA77000C78535 /* EventsListViewController.xib */; };
+		11C1A4DB242BB1F500C78535 /* FavoritesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1A4DA242BB1F500C78535 /* FavoritesProtocol.swift */; };
+		11C1A4DD242BC1F300C78535 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1A4DC242BC1F300C78535 /* FavoritesManager.swift */; };
+		11C1A4DF242BC23C00C78535 /* FavoritesDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1A4DE242BC23C00C78535 /* FavoritesDataStore.swift */; };
+		11C1A4E1242BC3E700C78535 /* UserDefaultsFavoritesDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C1A4E0242BC3E700C78535 /* UserDefaultsFavoritesDataStore.swift */; };
 		5BE9CC4F31B276481360B0B5 /* Pods_SeatGeekEvents_SeatGeekEventsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3D7B89E196F2F1CD0A88272 /* Pods_SeatGeekEvents_SeatGeekEventsUITests.framework */; };
 		5E8897C078095B7B264803B5 /* Pods_SeatGeekEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146DA479D5CAB37326049264 /* Pods_SeatGeekEvents.framework */; };
 		FF87AA4E983AC0F179F51066 /* Pods_SeatGeekEventsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB3250F9645CED344B76C74 /* Pods_SeatGeekEventsTests.framework */; };
@@ -86,6 +90,10 @@
 		11C1A4D3242B9D4100C78535 /* EventCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCoordinator.swift; sourceTree = "<group>"; };
 		11C1A4D5242BA77000C78535 /* EventsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsListViewController.swift; sourceTree = "<group>"; };
 		11C1A4D6242BA77000C78535 /* EventsListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsListViewController.xib; sourceTree = "<group>"; };
+		11C1A4DA242BB1F500C78535 /* FavoritesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesProtocol.swift; sourceTree = "<group>"; };
+		11C1A4DC242BC1F300C78535 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
+		11C1A4DE242BC23C00C78535 /* FavoritesDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesDataStore.swift; sourceTree = "<group>"; };
+		11C1A4E0242BC3E700C78535 /* UserDefaultsFavoritesDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsFavoritesDataStore.swift; sourceTree = "<group>"; };
 		146DA479D5CAB37326049264 /* Pods_SeatGeekEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeatGeekEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		232AD4F2D4C20E0CAEC548C3 /* Pods-SeatGeekEventsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeatGeekEventsTests.release.xcconfig"; path = "Target Support Files/Pods-SeatGeekEventsTests/Pods-SeatGeekEventsTests.release.xcconfig"; sourceTree = "<group>"; };
 		2FB3250F9645CED344B76C74 /* Pods_SeatGeekEventsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeatGeekEventsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +160,7 @@
 			children = (
 				11538A28242A9BBD00976767 /* Resources */,
 				112AFEF8242A59EB006CE3F8 /* NetworkingService */,
+				11C1A4D9242BB1D800C78535 /* FavoritesService */,
 				112AFEF7242A53A1006CE3F8 /* Model */,
 				11538A29242A9BF400976767 /* EventsList */,
 				1143DEFE242B030E009285A1 /* Event Detail */,
@@ -250,6 +259,17 @@
 				11C1A4D3242B9D4100C78535 /* EventCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		11C1A4D9242BB1D800C78535 /* FavoritesService */ = {
+			isa = PBXGroup;
+			children = (
+				11C1A4DA242BB1F500C78535 /* FavoritesProtocol.swift */,
+				11C1A4DC242BC1F300C78535 /* FavoritesManager.swift */,
+				11C1A4DE242BC23C00C78535 /* FavoritesDataStore.swift */,
+				11C1A4E0242BC3E700C78535 /* UserDefaultsFavoritesDataStore.swift */,
+			);
+			name = FavoritesService;
 			sourceTree = "<group>";
 		};
 		6C50D6A617843E8B2AD98A3D /* Pods */ = {
@@ -527,12 +547,16 @@
 				11C1A4D4242B9D4100C78535 /* EventCoordinator.swift in Sources */,
 				11C1A494242B8AD000C78535 /* MainCoordinator.swift in Sources */,
 				112AFF07242A8AEF006CE3F8 /* EventTableViewCellViewModel.swift in Sources */,
+				11C1A4DD242BC1F300C78535 /* FavoritesManager.swift in Sources */,
 				112AFEFE242A5A23006CE3F8 /* ParserError.swift in Sources */,
 				1143DEF9242AE1D7009285A1 /* NetworkClient.swift in Sources */,
 				1143DF03242B04DB009285A1 /* EventViewController.swift in Sources */,
+				11C1A4DF242BC23C00C78535 /* FavoritesDataStore.swift in Sources */,
+				11C1A4E1242BC3E700C78535 /* UserDefaultsFavoritesDataStore.swift in Sources */,
 				11538A27242A9BAF00976767 /* EventsListViewModel.swift in Sources */,
 				112AFEC3242A4E48006CE3F8 /* AppDelegate.swift in Sources */,
 				112AFEF3242A4FEA006CE3F8 /* SearchResultTableViewCell.swift in Sources */,
+				11C1A4DB242BB1F500C78535 /* FavoritesProtocol.swift in Sources */,
 				1143DF06242B0506009285A1 /* EventDetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

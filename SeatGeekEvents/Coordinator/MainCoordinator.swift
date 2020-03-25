@@ -32,7 +32,7 @@ class EventsCoordinator: Coordinator {
         window.makeKeyAndVisible()
     }
     
-    func showEvent(with viewModel: EventTableViewCellViewModelProtocol) {
+    func showEvent(with viewModel: EventViewModelProtocol) {
         guard let viewController = viewController else { return }
         let eventCoordinator = EventCoordinator(eventViewModel: viewModel, viewController: viewController)
         eventCoordinator.start()

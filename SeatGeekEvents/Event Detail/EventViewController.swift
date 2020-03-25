@@ -15,6 +15,7 @@ final class EventViewController: UIViewController {
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var locationLabel: UILabel!
     @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var favouriteButton: UIButton!
     
     let viewModel: EventViewModel
     
@@ -31,6 +32,16 @@ final class EventViewController: UIViewController {
         super.viewDidLoad()
 
         configureInterface()
+        let _ = viewModel.isFavorite.observeNext { [unowned self] isFavourite in
+            let favoriteEventButtonImage = UIImage(named: "heart_on")
+            let unfavoriteEventButtonImage = UIImage(named: "heart_off")
+            
+            let favouriteButtonImage = isFavourite ? favoriteEventButtonImage : unfavoriteEventButtonImage
+            self.favouriteButton.setImage(favouriteButtonImage, for: .normal)
+        }
+        let _ = favouriteButton.reactive.controlEvents(.touchUpInside).observeNext { [unowned self] _ in
+            self.viewModel.favouriteButtonTapped()
+        }
     }
 
     private func configureInterface() {
@@ -43,6 +54,7 @@ final class EventViewController: UIViewController {
         let _ = closeButton.reactive.controlEvents(.touchUpInside).observeNext { [unowned self] _ in
             self.dismiss(animated: true, completion: nil)
         }
+        
     }
     
 

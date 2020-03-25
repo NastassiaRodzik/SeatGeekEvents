@@ -9,17 +9,18 @@
 import UIKit
 import Bond
 
-protocol EventTableViewCellViewModelProtocol {
+protocol EventViewModelProtocol {
 
+    var identifier: Int { get }
     var title: String { get }
     var location: String { get }
     var time: String { get }
-    var isFavorite: Bool { get set }
+    var isFavorite: Observable<Bool> { get set }
     var image: Observable<UIImage?> { get }
     
 }
 
-final class EventTableViewCellViewModel: EventTableViewCellViewModelProtocol {
+final class EventTableViewCellViewModel: EventViewModelProtocol {
     
     static var rawEventDateFormatter: DateFormatter {
         let rawStringDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -44,15 +45,19 @@ final class EventTableViewCellViewModel: EventTableViewCellViewModelProtocol {
         return dateFormatter
     }
     
+    let identifier: Int
     var title: String
     var location: String
     var time: String
-    var isFavorite: Bool
+    var isFavorite: Observable<Bool>
     let image: Observable<UIImage?> = Observable<UIImage?>(nil)
     
+    private let favoritesManager = FavoritesManager()
+    
     init(event: Event) {
+        self.identifier = event.identifier
         self.title = event.title ?? ""
-        self.isFavorite = false
+        self.isFavorite = Observable<Bool>(favoritesManager.isFavorite(eventIdentifier: event.identifier))
         self.location = event.venue?.location ?? ""
         if let timeRawString = event.dateTime {
             if let eventDate = EventTableViewCellViewModel.rawEventDateFormatter.date(from: timeRawString) {

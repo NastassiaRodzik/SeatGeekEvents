@@ -13,8 +13,8 @@ protocol EventsListViewModelProtocol {
     
     var searchString: Observable<String?> { get }
     var selectedIndexPath: Observable<IndexPath?> { get }
-    var nextEventToDisplay: Observable<EventTableViewCellViewModelProtocol?> { get }
-    var events: MutableObservableArray<EventTableViewCellViewModelProtocol> { get }
+    var nextEventToDisplay: Observable<EventViewModelProtocol?> { get }
+    var events: MutableObservableArray<EventViewModelProtocol> { get }
     
     func loadNewPage()
 }
@@ -22,8 +22,8 @@ protocol EventsListViewModelProtocol {
 final class EventsListViewModel: EventsListViewModelProtocol {
     let searchString: Observable<String?> = Observable<String?>(nil)
     let selectedIndexPath: Observable<IndexPath?> = Observable<IndexPath?>(nil)
-    let nextEventToDisplay: Observable<EventTableViewCellViewModelProtocol?> = Observable<EventTableViewCellViewModelProtocol?>(nil)
-    let events: MutableObservableArray<EventTableViewCellViewModelProtocol> = MutableObservableArray([])
+    let nextEventToDisplay: Observable<EventViewModelProtocol?> = Observable<EventViewModelProtocol?>(nil)
+    let events: MutableObservableArray<EventViewModelProtocol> = MutableObservableArray([])
     
     var currentPage = 1
     var isNewPageLoading = false

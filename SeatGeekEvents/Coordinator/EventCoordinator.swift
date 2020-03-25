@@ -10,17 +10,17 @@ import UIKit
 
 struct EventCoordinator: Coordinator {
     
-    private let eventViewModel: EventTableViewCellViewModelProtocol
+    private let eventViewModel: EventViewModelProtocol
     private let viewController: UIViewController
     
-    init(eventViewModel: EventTableViewCellViewModelProtocol,
+    init(eventViewModel: EventViewModelProtocol,
          viewController: UIViewController) {
         self.eventViewModel = eventViewModel
         self.viewController = viewController
     }
     
     func start() {
-        let viewModel = EventDetailViewModel(eventViewModel: eventViewModel)
+        let viewModel = EventDetailViewModel(eventViewModel: eventViewModel, favoritesManager: FavoritesManager())
         let eventController = EventViewController(viewModel: viewModel)
         viewController.present(eventController, animated: true)
         

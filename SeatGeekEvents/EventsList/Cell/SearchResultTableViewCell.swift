@@ -31,11 +31,13 @@ final class SearchResultTableViewCell: UITableViewCell {
         })
     }
     
-    func configure(with eventViewModel: EventTableViewCellViewModelProtocol) {
+    func configure(with eventViewModel: EventViewModelProtocol) {
         eventTitleLabel.text = eventViewModel.title
         eventLocationLabel.text = eventViewModel.location
         eventTimeLabel.text = eventViewModel.time
-        favouriteImageView.isHidden = !eventViewModel.isFavorite
+        let _ = eventViewModel.isFavorite.observeNext { [weak self] isFavorite in
+            self?.favouriteImageView.isHidden = !isFavorite
+        }
         let defaultImage = UIImage(named: "placeholder")
         eventImageView.image = defaultImage
         let _ = eventViewModel.image.observeNext { [weak self] image in

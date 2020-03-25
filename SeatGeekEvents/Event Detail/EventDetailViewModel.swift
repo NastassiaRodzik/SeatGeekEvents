@@ -7,18 +7,44 @@
 //
 
 import Foundation
+import Bond
+import ReactiveKit
 
 protocol EventViewModel {
+   
+    var isFavorite: Observable<Bool> { get }
+    var eventViewModel: EventViewModelProtocol { get }
     
-    var eventViewModel: EventTableViewCellViewModelProtocol { get }
-    
+    func favouriteButtonTapped()
 }
 
 struct EventDetailViewModel: EventViewModel {
-    var eventViewModel: EventTableViewCellViewModelProtocol
+
+    let isFavorite: Observable<Bool>
+    var eventViewModel: EventViewModelProtocol
     
-    init(eventViewModel: EventTableViewCellViewModelProtocol) {
+    private let favoritesManager: FavoritesHandler
+    private let disposeBag = DisposeBag()
+    
+    init(eventViewModel: EventViewModelProtocol, favoritesManager: FavoritesHandler) {
         self.eventViewModel = eventViewModel
+        self.favoritesManager = favoritesManager
+        
+        isFavorite = Observable<Bool>(eventViewModel.isFavorite.value)
+        isFavorite
+            .bind(to: eventViewModel.isFavorite)
+            .dispose(in: disposeBag)
+    }
+    
+    func favouriteButtonTapped() {
+        let eventIdentifier = eventViewModel.identifier
+        if isFavorite.value {
+            favoritesManager.removeFromFavorite(eventIdentifier: eventIdentifier)
+            isFavorite.value = false
+        } else {
+            favoritesManager.makeFavorite(eventIdentifier: eventIdentifier)
+            isFavorite.value = true
+        }
     }
 }
 
