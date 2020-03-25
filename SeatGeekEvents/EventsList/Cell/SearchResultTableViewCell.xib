@@ -65,11 +65,21 @@
                             <constraint firstAttribute="height" constant="20" id="JwI-8m-Y9Y"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rXQ-JG-Xh0">
+                        <rect key="frame" x="20" y="98" width="284" height="1"/>
+                        <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="pvZ-Gg-Mix"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="DWg-bt-CLT" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="6sH-5M-9nU"/>
                     <constraint firstAttribute="bottom" secondItem="DWg-bt-CLT" secondAttribute="bottom" constant="20" id="Be8-iR-fCa"/>
+                    <constraint firstAttribute="bottom" secondItem="rXQ-JG-Xh0" secondAttribute="bottom" id="DOs-bB-6Ig"/>
                     <constraint firstItem="OeM-SV-QK7" firstAttribute="leading" secondItem="DWg-bt-CLT" secondAttribute="leading" constant="-5" id="GIE-DY-6Pe"/>
+                    <constraint firstItem="rXQ-JG-Xh0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="KRT-Ft-nH8"/>
+                    <constraint firstAttribute="trailing" secondItem="rXQ-JG-Xh0" secondAttribute="trailing" constant="20" id="bHp-4P-bpn"/>
                     <constraint firstItem="DWg-bt-CLT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="brF-81-cMx"/>
                     <constraint firstItem="OeM-SV-QK7" firstAttribute="top" secondItem="DWg-bt-CLT" secondAttribute="top" constant="-5" id="iGg-cg-2tM"/>
                     <constraint firstItem="DWg-bt-CLT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="io0-b8-qvu"/>
@@ -83,7 +93,7 @@
                 <outlet property="eventTitleLabel" destination="irS-F3-mop" id="xni-It-4pp"/>
                 <outlet property="favouriteImageView" destination="OeM-SV-QK7" id="YCO-w9-7nJ"/>
             </connections>
-            <point key="canvasLocation" x="122" y="177"/>
+            <point key="canvasLocation" x="121.59999999999999" y="176.76161919040482"/>
         </tableViewCell>
     </objects>
     <resources>
