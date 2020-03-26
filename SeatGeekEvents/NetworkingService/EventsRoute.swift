@@ -37,7 +37,8 @@ struct EventsRoute: NetworkRouter {
     let parametersString: String
     
     init(searchString: String, page: Int) {
-        parametersString = "?\(Server.Parameter.clientId)=\(Server.SeatGeekConstants.clientId)&\(Server.Parameter.searchString)=\(searchString)&\(Server.Parameter.page)=\(page)"
+        let modifiedSearchString = searchString.replacingOccurrences(of: " ", with: "+")
+        parametersString = "?\(Server.Parameter.clientId)=\(Server.SeatGeekConstants.clientId)&\(Server.Parameter.searchString)=\(modifiedSearchString)&\(Server.Parameter.page)=\(page)"
     }
 
 }
