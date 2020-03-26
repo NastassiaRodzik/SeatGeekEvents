@@ -53,6 +53,7 @@ final class EventsListViewController: UIViewController {
         tableView.rowHeight = SearchResultTableViewCell.rowHeight
         tableView.accessibilityIdentifier = "EventsTableView"
         tableView.delegate = self
+        tableView.keyboardDismissMode = .onDrag
     }
 
 }
