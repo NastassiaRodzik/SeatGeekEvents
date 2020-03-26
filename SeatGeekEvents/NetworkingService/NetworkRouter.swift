@@ -19,16 +19,22 @@ protocol NetworkRouter {
     var method: HTTPMethod { get }
     var urlString: String { get }
     var path: String { get }
-    var parametersString: String { get }
+    var parameters: [String: String?] { get }
 }
 
 extension NetworkRouter {
 
     func asURLRequest() throws -> URLRequest {
-        guard let requestURL = URL(string: urlString + path + parametersString) else {
+
+        guard var urlComponents = URLComponents(string: urlString + path) else {
             throw NetworkError.invalidURL
         }
-        var urlRequest = URLRequest(url: requestURL)
+        let queryItems: [URLQueryItem] = parameters.map({ URLQueryItem(name: $0.key, value: $0.value) })
+        urlComponents.queryItems = queryItems
+        guard let url = urlComponents.url else {
+            throw NetworkError.invalidURL
+        }
+        var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
         urlRequest.cachePolicy = .returnCacheDataElseLoad
         return urlRequest

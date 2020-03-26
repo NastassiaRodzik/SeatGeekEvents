@@ -34,11 +34,13 @@ struct EventsRoute: NetworkRouter {
     let method: HTTPMethod = .get
     let urlString: String = Server.Production.baseURL
     let path: String = Server.PathComponent.events
-    let parametersString: String
+    var parameters: [String: String?]
     
     init(searchString: String, page: Int) {
-        let modifiedSearchString = searchString.replacingOccurrences(of: " ", with: "+")
-        parametersString = "?\(Server.Parameter.clientId)=\(Server.SeatGeekConstants.clientId)&\(Server.Parameter.searchString)=\(modifiedSearchString)&\(Server.Parameter.page)=\(page)"
+        parameters = [Server.Parameter.clientId: Server.SeatGeekConstants.clientId,
+                      Server.Parameter.searchString: searchString,
+                      Server.Parameter.page: "\(page)"
+        ]
     }
 
 }

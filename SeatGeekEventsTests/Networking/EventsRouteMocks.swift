@@ -9,11 +9,10 @@
 import Foundation
 
 struct NoClientInfoRouteMock: NetworkRouter {
-    
     let method: HTTPMethod = .get
     let urlString: String = "https://www.google.com"
     let path: String = ""
-    let parametersString: String = ""
+    var parameters: [String : String?] = [:]
 }
 
 struct InvalidURLRouteMock: NetworkRouter {
@@ -21,5 +20,5 @@ struct InvalidURLRouteMock: NetworkRouter {
     let method: HTTPMethod = .get
     let urlString: String = "$%#___+?"
     let path: String = ""
-    let parametersString: String = ""
+    var parameters: [String : String?] = [:]
 }
