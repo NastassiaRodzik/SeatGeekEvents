@@ -24,8 +24,8 @@ class SeatGeekEventsUITests: XCTestCase {
         let eventsTableView = XCUIApplication().tables["EventsTableView"]
         let eventCells = eventsTableView.cells
         let predicate = NSPredicate(value: eventCells.count > 0)
-        expectation(for: predicate, evaluatedWith: eventCells)
-        waitForExpectations(timeout: 1.5)
+        let cellsExpectation = expectation(for: predicate, evaluatedWith: eventCells)
+        let _ = XCTWaiter.wait(for: [cellsExpectation], timeout: 1.5)
         
     }
 
