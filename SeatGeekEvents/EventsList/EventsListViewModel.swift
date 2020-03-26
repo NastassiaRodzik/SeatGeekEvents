@@ -22,7 +22,7 @@ protocol EventsListViewModelProtocol {
 }
 
 final class EventsListViewModel: EventsListViewModelProtocol {
-    let searchString: Observable<String?> = Observable<String?>(nil)
+    let searchString: Observable<String?> = Observable<String?>("")
     let selectedIndexPath: Observable<IndexPath?> = Observable<IndexPath?>(nil)
     let nextEventToDisplay: Observable<EventViewModelProtocol?> = Observable<EventViewModelProtocol?>(nil)
     let events: MutableObservableArray<EventViewModelProtocol> = MutableObservableArray([])
@@ -38,11 +38,7 @@ final class EventsListViewModel: EventsListViewModelProtocol {
             .debounce(for: 0.5)
             .removeDuplicates()
             .observeNext { [unowned self] text in
-                guard let text = text else {
-                    self.events.removeAll()
-                    return
-                }
-                self.loadEvents(with: text)
+                self.loadEvents(with: text ?? "")
         }
         
         let indexPathDisposable = selectedIndexPath.observeNext(with: { [unowned self] indexPath in
@@ -67,36 +63,33 @@ final class EventsListViewModel: EventsListViewModelProtocol {
     }
     
     private func loadEvents(with searchString: String, page: Int = 1) {
-        guard searchString.count > 0 else {
-            self.events.removeAll()
-            return
-        }
-        
-        EventsClient().loadData(searchString: searchString, page: page) { [unowned self] (data, error) in
-            if let error = error {
-                self.error.value = error
-                return
-            }
-            guard let data = data else {
-                self.error.value = NetworkError.noDataAvailable
-                return
-            }
-            guard let events = EventsJSONParser().parseItems(from: data) else {
-                self.error.value = ParserError.cannotDecodeData
-                return
-            }
-            self.currentPage = page
-            let eventsViewModels = events.events.map({ EventTableViewCellViewModel(event: $0)})
 
-            if page == 1 {
-                self.events.removeAll()
-                self.events.insert(contentsOf: eventsViewModels, at: 0)
-            } else {
-                let lastIndex = self.events.count - 1 > 0 ? self.events.count - 1 : 0
-                self.events.insert(contentsOf: eventsViewModels, at: lastIndex)
+        EventsClient().loadData(searchString: searchString, page: page) { [weak self] (data, error) in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                if let error = error {
+                    self.error.value = error
+                    return
+                }
+                guard let data = data else {
+                    self.error.value = NetworkError.noDataAvailable
+                    return
+                }
+                guard let events = EventsJSONParser().parseItems(from: data) else {
+                    self.error.value = ParserError.cannotDecodeData
+                    return
+                }
+                self.currentPage = page
+                let eventsViewModels = events.events.map({ EventTableViewCellViewModel(event: $0)})
+                if page == 1 {
+                   self.events.removeAll()
+                   self.events.insert(contentsOf: eventsViewModels, at: 0)
+                } else {
+                   let lastIndex = self.events.count - 1 > 0 ? self.events.count - 1 : 0
+                   self.events.insert(contentsOf: eventsViewModels, at: lastIndex)
+                }
+                self.isNewPageLoading = false
             }
-            self.isNewPageLoading = false
-               
         }
     }
 

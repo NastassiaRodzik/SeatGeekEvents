@@ -74,8 +74,8 @@ extension EventsListViewController: UITableViewDelegate {
 // MARK: - UISearchBarDelegate
 extension EventsListViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = nil
-        viewModel.searchString.value = nil
+        searchBar.text = ""
+        viewModel.searchString.value = ""
         searchBar.resignFirstResponder()
     }
 }

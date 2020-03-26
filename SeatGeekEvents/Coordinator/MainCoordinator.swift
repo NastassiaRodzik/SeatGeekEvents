@@ -32,7 +32,7 @@ class EventsCoordinator: Coordinator {
         }
         
         let errorDisposable = viewModel.error.observeNext { [weak self] error in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 self?.presentError(error)
             }
         }
