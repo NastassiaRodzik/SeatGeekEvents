@@ -23,7 +23,7 @@ final class SearchResultTableViewCell: UITableViewCell {
     }
     
     private let disposeBag = DisposeBag()
-    
+   
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -32,6 +32,8 @@ final class SearchResultTableViewCell: UITableViewCell {
         [eventTitleLabel, eventLocationLabel, eventTimeLabel].forEach({
             $0?.text = nil
         })
+        
+        disposeBag.dispose()
     }
     
     func configure(with eventViewModel: EventViewModelProtocol) {
