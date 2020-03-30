@@ -9,6 +9,6 @@
 import Foundation
 
 protocol DuplicatesFilter {
-    func filterDuplicates(from elements: [Identifiable]) -> [Identifiable]
+    func filterDuplicates(from elements: [IntIdentifiable]) -> [IntIdentifiable]
     func resetElementsIdentifiers()
 }

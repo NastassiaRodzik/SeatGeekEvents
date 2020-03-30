@@ -12,11 +12,11 @@ struct EventsResponse: Codable {
     let events: [Event]
 }
 
-protocol Identifiable {
+protocol IntIdentifiable {
     var identifier: Int { get }
 }
 
-struct Event: Codable, Identifiable {
+struct Event: Codable, IntIdentifiable {
     let identifier: Int
     let title: String
     let venue: Venue?

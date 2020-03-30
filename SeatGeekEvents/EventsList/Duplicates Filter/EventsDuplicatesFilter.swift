@@ -12,7 +12,7 @@ class EventsDuplicatesFilter: DuplicatesFilter {
     
     private var existingItemsIdentifiers: Set<Int> = Set<Int>()
     
-    func filterDuplicates(from elements: [Identifiable]) -> [Identifiable] {
+    func filterDuplicates(from elements: [IntIdentifiable]) -> [IntIdentifiable] {
         var filteredElements = elements
         for (index, element) in elements.enumerated().reversed() {
             if existingItemsIdentifiers.contains(element.identifier) {
