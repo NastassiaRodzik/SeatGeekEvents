@@ -24,7 +24,7 @@ class FavoritesManager: FavoritesHandler {
     }
     
     func removeFromFavorite(eventIdentifier: Int) {
-        guard let eventIdentifierIndex = favoriteEventIds.index(of: eventIdentifier) else { return }
+        guard let eventIdentifierIndex = favoriteEventIds.firstIndex(of: eventIdentifier) else { return }
         favoriteEventIds.remove(at: eventIdentifierIndex)
         backupFavorites()
     }

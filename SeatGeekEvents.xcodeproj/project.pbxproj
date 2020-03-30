@@ -424,13 +424,16 @@
 				TargetAttributes = {
 					112AFEBE242A4E48006CE3F8 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1140;
 					};
 					112AFED2242A4E48006CE3F8 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1140;
 						TestTargetID = 112AFEBE242A4E48006CE3F8;
 					};
 					112AFEDD242A4E48006CE3F8 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1140;
 						TestTargetID = 112AFEBE242A4E48006CE3F8;
 					};
 				};
@@ -808,7 +811,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SeatGeekEvents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -827,7 +830,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SeatGeekEvents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -848,7 +851,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SeatGeekEventsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SeatGeekEvents.app/SeatGeekEvents";
 			};
@@ -870,7 +873,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SeatGeekEventsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SeatGeekEvents.app/SeatGeekEvents";
 			};
@@ -891,7 +894,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SeatGeekEventsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = SeatGeekEvents;
 			};
@@ -912,7 +915,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SeatGeekEventsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = SeatGeekEvents;
 			};
