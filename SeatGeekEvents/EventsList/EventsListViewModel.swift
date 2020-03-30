@@ -32,8 +32,10 @@ final class EventsListViewModel: EventsListViewModelProtocol {
     var isNewPageLoading = false
     
     private let disposeBag = DisposeBag()
+    private let eventsFilter: DuplicatesFilter
     
-    init() {
+    init(eventsFilter: DuplicatesFilter = EventsDuplicatesFilter()) {
+        self.eventsFilter = eventsFilter
         let searchStringDisposable = searchString
             .debounce(for: 0.5)
             .removeDuplicates()
@@ -75,12 +77,16 @@ final class EventsListViewModel: EventsListViewModelProtocol {
                     self.error.value = NetworkError.noDataAvailable
                     return
                 }
-                guard let events = EventsJSONParser().parseItems(from: data) else {
+                guard var events = EventsJSONParser().parseItems(from: data)?.events else {
                     self.error.value = ParserError.cannotDecodeData
                     return
                 }
+                if page < 2 {
+                    self.eventsFilter.resetElementsIdentifiers()
+                }
+                events = self.eventsFilter.filterDuplicates(from: events) as! [Event]
                 self.currentPage = page
-                let eventsViewModels = events.events.map({ EventTableViewCellViewModel(event: $0)})
+                let eventsViewModels = events.map({ EventTableViewCellViewModel(event: $0)})
                 if page == 1 {
                    self.events.removeAll()
                    self.events.insert(contentsOf: eventsViewModels, at: 0)

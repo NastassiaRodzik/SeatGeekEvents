@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1107BB522432638300609EFF /* DuplicatesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1107BB512432638300609EFF /* DuplicatesFilter.swift */; };
+		1107BB552432645600609EFF /* EventsDuplicatesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1107BB542432645600609EFF /* EventsDuplicatesFilter.swift */; };
 		112AFEC3242A4E48006CE3F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112AFEC2242A4E48006CE3F8 /* AppDelegate.swift */; };
 		112AFECA242A4E48006CE3F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112AFEC9242A4E48006CE3F8 /* Assets.xcassets */; };
 		112AFECD242A4E48006CE3F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112AFECB242A4E48006CE3F8 /* LaunchScreen.storyboard */; };
@@ -77,6 +79,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1107BB512432638300609EFF /* DuplicatesFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatesFilter.swift; sourceTree = "<group>"; };
+		1107BB542432645600609EFF /* EventsDuplicatesFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDuplicatesFilter.swift; sourceTree = "<group>"; };
 		112AFEBF242A4E48006CE3F8 /* SeatGeekEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeatGeekEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		112AFEC2242A4E48006CE3F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		112AFEC9242A4E48006CE3F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -158,6 +162,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1107BB532432643200609EFF /* Duplicates Filter */ = {
+			isa = PBXGroup;
+			children = (
+				1107BB512432638300609EFF /* DuplicatesFilter.swift */,
+				1107BB542432645600609EFF /* EventsDuplicatesFilter.swift */,
+			);
+			path = "Duplicates Filter";
+			sourceTree = "<group>";
+		};
 		112AFEB6242A4E48006CE3F8 = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +283,7 @@
 		11538A29242A9BF400976767 /* EventsList */ = {
 			isa = PBXGroup;
 			children = (
+				1107BB532432643200609EFF /* Duplicates Filter */,
 				112AFEF0242A4FB1006CE3F8 /* Cell */,
 				11538A26242A9BAF00976767 /* EventsListViewModel.swift */,
 				11C1A4D5242BA77000C78535 /* EventsListViewController.swift */,
@@ -602,6 +616,7 @@
 				112AFF01242A5A23006CE3F8 /* Parser.swift in Sources */,
 				1143DEF7242AE1BA009285A1 /* NetworkRouter.swift in Sources */,
 				1143DEFD242AE208009285A1 /* EventsClient.swift in Sources */,
+				1107BB552432645600609EFF /* EventsDuplicatesFilter.swift in Sources */,
 				11C1A4D4242B9D4100C78535 /* EventCoordinator.swift in Sources */,
 				11C1A494242B8AD000C78535 /* MainCoordinator.swift in Sources */,
 				112AFF07242A8AEF006CE3F8 /* EventTableViewCellViewModel.swift in Sources */,
@@ -614,6 +629,7 @@
 				11538A27242A9BAF00976767 /* EventsListViewModel.swift in Sources */,
 				112AFEC3242A4E48006CE3F8 /* AppDelegate.swift in Sources */,
 				112AFEF3242A4FEA006CE3F8 /* SearchResultTableViewCell.swift in Sources */,
+				1107BB522432638300609EFF /* DuplicatesFilter.swift in Sources */,
 				11C1A4DB242BB1F500C78535 /* FavoritesProtocol.swift in Sources */,
 				1143DF06242B0506009285A1 /* EventDetailViewModel.swift in Sources */,
 			);
