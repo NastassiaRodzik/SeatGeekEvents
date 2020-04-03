@@ -31,7 +31,10 @@ class EventsURLProtocolMock: URLProtocol {
         let requiredQuery = "\(Constant.requiredParameter)=\(Constant.requiredParameterValue)"
 
         if let query = url.query, query.contains(requiredQuery) {
-            client?.urlProtocol(self, didLoad: Data())
+            let bundle = Bundle(for: type(of: self))
+            let eventsDataURL = bundle.url(forResource: "events", withExtension: "json")!
+            let eventsData = try! Data(contentsOf: eventsDataURL)
+            client?.urlProtocol(self, didLoad: eventsData)
             let response = HTTPURLResponse(url: url,
                                            statusCode: 200,
                                            httpVersion: nil,

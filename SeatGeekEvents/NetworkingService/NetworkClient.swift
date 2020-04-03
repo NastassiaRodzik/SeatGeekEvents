@@ -9,12 +9,12 @@
 import Foundation
 
 protocol NetworkClientProtocol {
-    func performRequest(route: NetworkRouter, session: URLSession, completion: @escaping (Data?, Error?) -> Void)
+    func performRequest<T: Decodable>(route: NetworkRouter, session: URLSession, decoder: JSONDecoder, completion: @escaping (T?, Error?) -> Void)
 }
 
 class NetworkClient: NetworkClientProtocol {
 
-    func performRequest(route: NetworkRouter, session: URLSession, completion: @escaping (Data?, Error?) -> Void)  {
+    func performRequest<T: Decodable>(route: NetworkRouter, session: URLSession, decoder: JSONDecoder = JSONDecoder(), completion: @escaping (T?, Error?) -> Void)  {
 
         do {
             let request = try route.asURLRequest()
@@ -36,7 +36,11 @@ class NetworkClient: NetworkClientProtocol {
                         completion(nil, NetworkError.invalidResponse)
                         return
                 }
-                completion(data, nil)
+                guard let result = try? decoder.decode(T.self, from: data) else {
+                    completion(nil, ParserError.cannotDecodeData)
+                    return
+                }
+                completion(result, nil)
             }.resume()
         } catch {
             completion(nil, error)

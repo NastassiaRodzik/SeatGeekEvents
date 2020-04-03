@@ -66,36 +66,33 @@ final class EventsListViewModel: EventsListViewModelProtocol {
     
     private func loadEvents(with searchString: String, page: Int = 1) {
 
-        EventsClient().loadData(searchString: searchString, page: page) { [weak self] (data, error) in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                if let error = error {
-                    self.error.value = error
-                    return
-                }
-                guard let data = data else {
-                    self.error.value = NetworkError.noDataAvailable
-                    return
-                }
-                guard var events = EventsJSONParser().parseItems(from: data)?.events else {
-                    self.error.value = ParserError.cannotDecodeData
-                    return
-                }
-                if page < 2 {
-                    self.eventsFilter.resetElementsIdentifiers()
-                }
-                events = self.eventsFilter.filterDuplicates(from: events) as! [Event]
-                self.currentPage = page
-                let eventsViewModels = events.map({ EventTableViewCellViewModel(event: $0)})
-                if page == 1 {
-                   self.events.removeAll()
-                   self.events.insert(contentsOf: eventsViewModels, at: 0)
-                } else {
-                   let lastIndex = self.events.count - 1 > 0 ? self.events.count - 1 : 0
-                   self.events.insert(contentsOf: eventsViewModels, at: lastIndex)
-                }
-                self.isNewPageLoading = false
+        EventsClient().loadData(searchString: searchString, page: page) { [weak self] (eventsResponse, error) in
+            
+            guard let self = self else { return }
+            if let error = error {
+                self.error.value = error
+                return
             }
+            guard var events = eventsResponse?.events, events.count > 0 else {
+                // TODO: process no events situation
+                return
+            }
+            if page < 2 {
+                self.eventsFilter.resetElementsIdentifiers()
+            }
+            
+            events = self.eventsFilter.filterDuplicates(from: events) as! [Event]
+            self.currentPage = page
+            let eventsViewModels = events.map({ EventTableViewCellViewModel(event: $0)})
+            if page == 1 {
+               self.events.removeAll()
+               self.events.insert(contentsOf: eventsViewModels, at: 0)
+            } else {
+               let lastIndex = self.events.count - 1 > 0 ? self.events.count - 1 : 0
+               self.events.insert(contentsOf: eventsViewModels, at: lastIndex)
+            }
+            self.isNewPageLoading = false
+
         }
     }
 
