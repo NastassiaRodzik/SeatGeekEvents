@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1107BB522432638300609EFF /* DuplicatesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1107BB512432638300609EFF /* DuplicatesFilter.swift */; };
+		1107BB552432645600609EFF /* EventsDuplicatesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1107BB542432645600609EFF /* EventsDuplicatesFilter.swift */; };
+		1107BB58243281D400609EFF /* DuplicatesFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1107BB57243281D400609EFF /* DuplicatesFilterTests.swift */; };
+		1107BB5A243281E500609EFF /* EventMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1107BB59243281E500609EFF /* EventMock.swift */; };
+		1107BB5B243281F100609EFF /* DuplicatesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1107BB512432638300609EFF /* DuplicatesFilter.swift */; };
+		1107BB5C243281F100609EFF /* EventsDuplicatesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1107BB542432645600609EFF /* EventsDuplicatesFilter.swift */; };
 		112AFEC3242A4E48006CE3F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112AFEC2242A4E48006CE3F8 /* AppDelegate.swift */; };
 		112AFECA242A4E48006CE3F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 112AFEC9242A4E48006CE3F8 /* Assets.xcassets */; };
 		112AFECD242A4E48006CE3F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 112AFECB242A4E48006CE3F8 /* LaunchScreen.storyboard */; };
@@ -77,6 +83,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1107BB512432638300609EFF /* DuplicatesFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatesFilter.swift; sourceTree = "<group>"; };
+		1107BB542432645600609EFF /* EventsDuplicatesFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDuplicatesFilter.swift; sourceTree = "<group>"; };
+		1107BB57243281D400609EFF /* DuplicatesFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatesFilterTests.swift; sourceTree = "<group>"; };
+		1107BB59243281E500609EFF /* EventMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMock.swift; sourceTree = "<group>"; };
 		112AFEBF242A4E48006CE3F8 /* SeatGeekEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeatGeekEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		112AFEC2242A4E48006CE3F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		112AFEC9242A4E48006CE3F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -158,6 +168,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1107BB532432643200609EFF /* Duplicates Filter */ = {
+			isa = PBXGroup;
+			children = (
+				1107BB512432638300609EFF /* DuplicatesFilter.swift */,
+				1107BB542432645600609EFF /* EventsDuplicatesFilter.swift */,
+			);
+			path = "Duplicates Filter";
+			sourceTree = "<group>";
+		};
+		1107BB56243281BF00609EFF /* Duplicates */ = {
+			isa = PBXGroup;
+			children = (
+				1107BB57243281D400609EFF /* DuplicatesFilterTests.swift */,
+				1107BB59243281E500609EFF /* EventMock.swift */,
+			);
+			path = Duplicates;
+			sourceTree = "<group>";
+		};
 		112AFEB6242A4E48006CE3F8 = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +227,7 @@
 		112AFED6242A4E48006CE3F8 /* SeatGeekEventsTests */ = {
 			isa = PBXGroup;
 			children = (
+				1107BB56243281BF00609EFF /* Duplicates */,
 				11C1A4FF242BF41600C78535 /* Favorites */,
 				11C1A4F6242BF08600C78535 /* Parsing */,
 				11C1A4F5242BEE4200C78535 /* Networking */,
@@ -270,6 +299,7 @@
 		11538A29242A9BF400976767 /* EventsList */ = {
 			isa = PBXGroup;
 			children = (
+				1107BB532432643200609EFF /* Duplicates Filter */,
 				112AFEF0242A4FB1006CE3F8 /* Cell */,
 				11538A26242A9BAF00976767 /* EventsListViewModel.swift */,
 				11C1A4D5242BA77000C78535 /* EventsListViewController.swift */,
@@ -605,6 +635,7 @@
 				112AFF01242A5A23006CE3F8 /* Parser.swift in Sources */,
 				1143DEF7242AE1BA009285A1 /* NetworkRouter.swift in Sources */,
 				1143DEFD242AE208009285A1 /* EventsClient.swift in Sources */,
+				1107BB552432645600609EFF /* EventsDuplicatesFilter.swift in Sources */,
 				11C1A4D4242B9D4100C78535 /* EventCoordinator.swift in Sources */,
 				11C1A494242B8AD000C78535 /* MainCoordinator.swift in Sources */,
 				112AFF07242A8AEF006CE3F8 /* EventTableViewCellViewModel.swift in Sources */,
@@ -617,6 +648,7 @@
 				11538A27242A9BAF00976767 /* EventsListViewModel.swift in Sources */,
 				112AFEC3242A4E48006CE3F8 /* AppDelegate.swift in Sources */,
 				112AFEF3242A4FEA006CE3F8 /* SearchResultTableViewCell.swift in Sources */,
+				1107BB522432638300609EFF /* DuplicatesFilter.swift in Sources */,
 				11C1A4DB242BB1F500C78535 /* FavoritesProtocol.swift in Sources */,
 				1143DF06242B0506009285A1 /* EventDetailViewModel.swift in Sources */,
 			);
@@ -627,6 +659,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				11C1A4E4242BE18100C78535 /* FavoritesDataStore.swift in Sources */,
+				1107BB5B243281F100609EFF /* DuplicatesFilter.swift in Sources */,
+				1107BB58243281D400609EFF /* DuplicatesFilterTests.swift in Sources */,
 				11C1A4F1242BE90300C78535 /* EventsClient.swift in Sources */,
 				11C1A4ED242BE68600C78535 /* NetworkClient.swift in Sources */,
 				11C1A4E6242BE2D700C78535 /* FavoritesManager.swift in Sources */,
@@ -638,8 +672,10 @@
 				11C1A4FC242BF33100C78535 /* Event.swift in Sources */,
 				11C1A4FA242BF23000C78535 /* EventsParsingTests.swift in Sources */,
 				11C1A4EB242BE63300C78535 /* EventsNetworkingServiceTest.swift in Sources */,
+				1107BB5A243281E500609EFF /* EventMock.swift in Sources */,
 				11C1A4E5242BE1B500C78535 /* FavoritesProtocol.swift in Sources */,
 				11C1A4EF242BE7B200C78535 /* EventsURLProtocolMock.swift in Sources */,
+				1107BB5C243281F100609EFF /* EventsDuplicatesFilter.swift in Sources */,
 				11C1A4F2242BE93E00C78535 /* EventsRoute.swift in Sources */,
 				11C1A4F0242BE7C400C78535 /* NetworkError.swift in Sources */,
 				11C1A4EC242BE68400C78535 /* NetworkRouter.swift in Sources */,
