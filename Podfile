@@ -8,6 +8,7 @@ target 'SeatGeekEvents' do
   # Pods for SeatGeekEvents
 
   pod 'Bond', '7.6.0'
+  pod 'ReachabilitySwift'
 
   target 'SeatGeekEventsTests' do
     inherit! :search_paths

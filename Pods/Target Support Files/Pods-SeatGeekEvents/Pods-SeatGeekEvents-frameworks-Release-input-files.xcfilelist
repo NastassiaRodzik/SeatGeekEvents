@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-SeatGeekEvents/Pods-SeatGeekEvents-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Bond/Bond.framework
 ${BUILT_PRODUCTS_DIR}/Differ/Differ.framework
+${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework
 ${BUILT_PRODUCTS_DIR}/ReactiveKit/ReactiveKit.framework

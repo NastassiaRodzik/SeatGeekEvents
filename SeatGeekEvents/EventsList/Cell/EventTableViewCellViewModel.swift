@@ -18,18 +18,20 @@ protocol EventViewModelProtocol {
     var isFavorite: Observable<Bool> { get }
     var image: Observable<UIImage?> { get }
     
+    func reloadImageIfNeeded()
+    
 }
 
 final class EventTableViewCellViewModel: EventViewModelProtocol {
     
-    static var rawEventDateFormatter: DateFormatter {
+    private static var rawEventDateFormatter: DateFormatter {
         let rawStringDateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = rawStringDateFormat
         return dateFormatter
     }
     
-    static var eventDateFormatter: DateFormatter {
+    private static var eventDateFormatter: DateFormatter {
         let datetimeFormat = "EEE, dd MMM yyyy"
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -37,7 +39,7 @@ final class EventTableViewCellViewModel: EventViewModelProtocol {
         return dateFormatter
     }
     
-    static var eventDateTimeFormatter: DateFormatter {
+    private static var eventDateTimeFormatter: DateFormatter {
         let datetimeFormat = "EEE, dd MMM yyyy h:mm a"
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -52,20 +54,20 @@ final class EventTableViewCellViewModel: EventViewModelProtocol {
     let isFavorite: Observable<Bool>
     let image: Observable<UIImage?> = Observable<UIImage?>(nil)
     
+    private var isImageFound = false
+    private let imageURL: URL?
+    
     init(event: Event, favoritesManager: FavoritesHandler = FavoritesManager()) {
         self.identifier = event.identifier
         self.title = event.title
         self.isFavorite = Observable<Bool>(favoritesManager.isFavorite(eventIdentifier: event.identifier))
         self.location = event.venue?.location ?? ""
-        if let timeRawString = event.dateTime {
-            if let eventDate = EventTableViewCellViewModel.rawEventDateFormatter.date(from: timeRawString) {
-                if let timeIsNotDetermined = event.timeIsNotDetermined, timeIsNotDetermined {
-                    self.time = EventTableViewCellViewModel.eventDateFormatter.string(from: eventDate)
-                } else {
-                    self.time = EventTableViewCellViewModel.eventDateTimeFormatter.string(from: eventDate)
-                }
+        if let timeRawString = event.dateTime,
+            let eventDate = EventTableViewCellViewModel.rawEventDateFormatter.date(from: timeRawString) {
+            if let timeIsNotDetermined = event.timeIsNotDetermined, timeIsNotDetermined {
+                self.time = EventTableViewCellViewModel.eventDateFormatter.string(from: eventDate)
             } else {
-                self.time = ""
+                self.time = EventTableViewCellViewModel.eventDateTimeFormatter.string(from: eventDate)
             }
         } else {
             self.time = ""
@@ -77,17 +79,29 @@ final class EventTableViewCellViewModel: EventViewModelProtocol {
                                    .imageURL
 
         if let imageURLString = eventImageURL, let imageURL = URL(string: imageURLString) {
-            
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: imageURL) {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.image.value = UIImage(data: data)
-                    }
-                }
-               
-            }
-            
+            self.imageURL = imageURL
+        } else {
+            isImageFound = true
+            imageURL = nil
         }
+    }
+    
+    func loadImage() {
+        guard let imageURL = imageURL else { return }
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: imageURL) {
+                DispatchQueue.main.async { [weak self] in
+                    self?.image.value = UIImage(data: data)
+                    self?.isImageFound = true
+                }
+            }
+           
+        }
+    }
+    
+    func reloadImageIfNeeded() {
+        if isImageFound { return }
+        loadImage()
     }
     
 }

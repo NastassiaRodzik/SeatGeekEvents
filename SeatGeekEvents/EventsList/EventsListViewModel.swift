@@ -19,6 +19,8 @@ protocol EventsListViewModelProtocol {
     var events: MutableObservableArray<EventViewModelProtocol> { get }
     var error: Observable<Error?> { get }
     
+    var visibleIndexPaths: (() -> [IndexPath])? { get set }
+    
     func loadNewPage()
 }
 
@@ -30,14 +32,20 @@ final class EventsListViewModel: EventsListViewModelProtocol {
     let events: MutableObservableArray<EventViewModelProtocol> = MutableObservableArray([])
     let error: Observable<Error?> = Observable<Error?>(nil)
     
+    var visibleIndexPaths: (() -> [IndexPath])?
+    
     private var currentPage = 1
     private var isNewPageLoading = false
     
     private let disposeBag = DisposeBag()
     private let eventsFilter: DuplicatesFilter
+    private let connectivityManager: ConnectivityManager
+    private var lastFailedRequest: (query: String, page: Int)? = nil
     
-    init(eventsFilter: DuplicatesFilter = EventsDuplicatesFilter()) {
+    init(eventsFilter: DuplicatesFilter = EventsDuplicatesFilter(), connectivityManager: ConnectivityManager = ReachabilityManager()) {
         self.eventsFilter = eventsFilter
+        self.connectivityManager = connectivityManager
+        
         let searchStringDisposable = searchString
             .debounce(for: 0.5)
             .removeDuplicates()
@@ -51,7 +59,21 @@ final class EventsListViewModel: EventsListViewModelProtocol {
             self.nextEventToDisplay.value = nextEvent
         })
         
-        [searchStringDisposable, indexPathDisposable].forEach({ $0.dispose(in: disposeBag) })
+        let connectivityDisposable = connectivityManager.isConnected
+            .dropFirst(1)
+            .removeDuplicates()
+            .observeNext { [weak self] isConnected in
+                guard let self = self else { return }
+                if isConnected {
+                    if let lastRequest = self.lastFailedRequest {
+                        self.loadEvents(with: lastRequest.query, page: lastRequest.page)
+                    }
+                    self.reloadVisibleImages()
+                } else  {
+                    // TODO: stop loading if loading and show error?
+                }
+        }
+        [connectivityDisposable, searchStringDisposable, indexPathDisposable].forEach({ $0.dispose(in: disposeBag) })
 
     }
     
@@ -67,12 +89,26 @@ final class EventsListViewModel: EventsListViewModelProtocol {
     }
     
     private func loadEvents(with searchString: String, page: Int = 1) {
-
+        let isConnectedToInternet = connectivityManager.isConnected.value
+        guard isConnectedToInternet else {
+            error.value = NetworkError.noInternetConnection
+            lastFailedRequest = (searchString, page)
+            if page == 1 {
+                self.events.removeAll()
+            }
+            return
+        }
         EventsClient().loadData(searchString: searchString, page: page) { [weak self] (eventsResponse, error) in
             
             guard let self = self else { return }
             if let error = error {
                 self.error.value = error
+                self.isNewPageLoading = false
+                // TODO: do we need to update page in this case? what if it is > 1 ?
+                self.currentPage = page
+                if page == 1 {
+                    self.events.removeAll()
+                }
                 return
             }
             guard var events = eventsResponse?.events, events.count > 0 else {
@@ -99,6 +135,18 @@ final class EventsListViewModel: EventsListViewModelProtocol {
             }
             self.isNewPageLoading = false
 
+        }
+    }
+    
+    private func reloadVisibleImages() {
+        guard let visibleIndexPaths = self.visibleIndexPaths?(), visibleIndexPaths.count > 0 else { return }
+        let visibleRows = visibleIndexPaths.map({ $0.row })
+        let events = self.events.value.collection
+        if let first = visibleRows.first, let last = visibleRows.last, last > first {
+            let visibleEvents = events[first...last]
+            for event in visibleEvents {
+                event.reloadImageIfNeeded()
+            }
         }
     }
 

@@ -21,6 +21,7 @@ private enum Server {
         static let clientId = "client_id"
         static let searchString = "q"
         static let page = "page"
+        static let elementsPerPage = "per_page"
     }
     
     enum SeatGeekConstants {
@@ -36,10 +37,11 @@ struct EventsRoute: NetworkRouter {
     let path: String = Server.PathComponent.events
     var parameters: [String: String?]
     
-    init(searchString: String, page: Int) {
+    init(searchString: String, page: Int, elementsPerPage: Int = 20) {
         parameters = [Server.Parameter.clientId: Server.SeatGeekConstants.clientId,
                       Server.Parameter.searchString: searchString,
-                      Server.Parameter.page: "\(page)"
+                      Server.Parameter.page: "\(page)",
+                      Server.Parameter.elementsPerPage: "\(elementsPerPage)"
         ]
     }
 

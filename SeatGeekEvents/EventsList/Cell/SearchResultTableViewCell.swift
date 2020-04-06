@@ -50,6 +50,7 @@ final class SearchResultTableViewCell: UITableViewCell {
             self?.eventImageView.image = image
         }
         [favoriteFlagDisposable, imageDisposable].forEach({ $0.dispose(in: disposeBag) })
+        eventViewModel.reloadImageIfNeeded()
     }
     
 }

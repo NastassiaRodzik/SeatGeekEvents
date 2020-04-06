@@ -15,11 +15,12 @@ final class EventsListViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var noEventsView: UIView!
     
-    private let viewModel: EventsListViewModelProtocol
+    private var viewModel: EventsListViewModelProtocol
     private let disposeBag = DisposeBag()
     
     init(viewModel: EventsListViewModelProtocol) {
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,6 +57,10 @@ final class EventsListViewController: UIViewController {
             .bind(to: viewModel.selectedIndexPath)
             .dispose(in: disposeBag)
         
+        viewModel.visibleIndexPaths = { [weak self] in
+            return self?.tableView.indexPathsForVisibleRows ?? []
+        }
+        
     }
     
     private func setupTableView() {
@@ -74,7 +79,7 @@ extension EventsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let totalEventsNumber = viewModel.events.count
-        let prefetchRowsNumber = 3
+        let prefetchRowsNumber = 6
         if indexPath.row > totalEventsNumber - prefetchRowsNumber {
             viewModel.loadNewPage()
         }
