@@ -13,6 +13,7 @@ final class EventsListViewController: UIViewController {
     
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var noEventsView: UIView!
     
     private let viewModel: EventsListViewModelProtocol
     private let disposeBag = DisposeBag()
@@ -40,6 +41,16 @@ final class EventsListViewController: UIViewController {
             cell.configure(with: viewModel)
         }
         .dispose(in: disposeBag)
+        
+        let eventsFlagDisposable = viewModel.isNoEventsFound.dropFirst(1).removeDuplicates().observeNext { [weak self] isNoEventsFound in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.tableView.isHidden = isNoEventsFound
+                self.noEventsView.isHidden = !isNoEventsFound
+            }
+            
+        }
+        eventsFlagDisposable.dispose(in: disposeBag)
         
         tableView.reactive.selectedRowIndexPath
             .bind(to: viewModel.selectedIndexPath)

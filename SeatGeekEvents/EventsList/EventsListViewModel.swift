@@ -12,6 +12,7 @@ import ReactiveKit
 
 protocol EventsListViewModelProtocol {
     
+    var isNoEventsFound: Observable<Bool> { get }
     var searchString: Observable<String?> { get }
     var selectedIndexPath: Observable<IndexPath?> { get }
     var nextEventToDisplay: Observable<EventViewModelProtocol?> { get }
@@ -22,14 +23,15 @@ protocol EventsListViewModelProtocol {
 }
 
 final class EventsListViewModel: EventsListViewModelProtocol {
+    let isNoEventsFound: Observable<Bool> = Observable<Bool>(false)
     let searchString: Observable<String?> = Observable<String?>("")
     let selectedIndexPath: Observable<IndexPath?> = Observable<IndexPath?>(nil)
     let nextEventToDisplay: Observable<EventViewModelProtocol?> = Observable<EventViewModelProtocol?>(nil)
     let events: MutableObservableArray<EventViewModelProtocol> = MutableObservableArray([])
     let error: Observable<Error?> = Observable<Error?>(nil)
     
-    var currentPage = 1
-    var isNewPageLoading = false
+    private var currentPage = 1
+    private var isNewPageLoading = false
     
     private let disposeBag = DisposeBag()
     private let eventsFilter: DuplicatesFilter
@@ -74,9 +76,13 @@ final class EventsListViewModel: EventsListViewModelProtocol {
                 return
             }
             guard var events = eventsResponse?.events, events.count > 0 else {
-                // TODO: process no events situation
+                self.isNoEventsFound.value = true
+                self.events.removeAll()
+                self.isNewPageLoading = false
+                self.currentPage = page
                 return
             }
+            self.isNoEventsFound.value = false
             if page < 2 {
                 self.eventsFilter.resetElementsIdentifiers()
             }

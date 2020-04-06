@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventsListViewController" customModule="SeatGeekEvents" customModuleProvider="target">
             <connections>
+                <outlet property="noEventsView" destination="TpM-uR-gHP" id="aol-bc-1y1"/>
                 <outlet property="searchBar" destination="RYa-zg-EMg" id="iX0-gN-wXh"/>
                 <outlet property="tableView" destination="vHI-nw-5mI" id="DUf-dv-RZh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -20,6 +21,24 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TpM-uR-gHP" userLabel="No events View">
+                    <rect key="frame" x="0.0" y="80" width="414" height="79"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No events found for your search" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ja1-dE-9uI">
+                            <rect key="frame" x="20" y="40" width="374" height="19"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="ja1-dE-9uI" secondAttribute="bottom" constant="20" id="HtX-UP-gEV"/>
+                        <constraint firstItem="ja1-dE-9uI" firstAttribute="leading" secondItem="TpM-uR-gHP" secondAttribute="leading" constant="20" id="Mok-lC-PVN"/>
+                        <constraint firstItem="ja1-dE-9uI" firstAttribute="centerX" secondItem="TpM-uR-gHP" secondAttribute="centerX" id="PHh-mA-r4h"/>
+                        <constraint firstItem="ja1-dE-9uI" firstAttribute="top" secondItem="TpM-uR-gHP" secondAttribute="top" constant="40" id="Rek-tl-tZb"/>
+                    </constraints>
+                </view>
                 <searchBar contentMode="redraw" placeholder="Search Any Event" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RYa-zg-EMg">
                     <rect key="frame" x="0.0" y="44" width="414" height="56"/>
                     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -35,10 +54,13 @@
                 <constraint firstItem="vHI-nw-5mI" firstAttribute="leading" secondItem="RYa-zg-EMg" secondAttribute="leading" id="8is-tt-PWt"/>
                 <constraint firstItem="vHI-nw-5mI" firstAttribute="trailing" secondItem="RYa-zg-EMg" secondAttribute="trailing" id="TT9-c1-cUj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vHI-nw-5mI" secondAttribute="bottom" id="XB3-RV-G67"/>
+                <constraint firstItem="TpM-uR-gHP" firstAttribute="leading" secondItem="RYa-zg-EMg" secondAttribute="leading" id="aqO-4g-avG"/>
                 <constraint firstItem="RYa-zg-EMg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="b8f-pL-aq2"/>
+                <constraint firstItem="TpM-uR-gHP" firstAttribute="trailing" secondItem="RYa-zg-EMg" secondAttribute="trailing" id="ezs-ON-axj"/>
                 <constraint firstItem="vHI-nw-5mI" firstAttribute="top" secondItem="RYa-zg-EMg" secondAttribute="bottom" id="gOG-gJ-RSK"/>
                 <constraint firstItem="RYa-zg-EMg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="kXP-3Q-UgK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RYa-zg-EMg" secondAttribute="trailing" id="pQn-wp-Yfg"/>
+                <constraint firstItem="TpM-uR-gHP" firstAttribute="top" secondItem="RYa-zg-EMg" secondAttribute="bottom" constant="-20" id="v9t-f7-g7R"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="108"/>
