@@ -69,7 +69,7 @@ class ItemsNetworkingServiceTest: XCTestCase {
                 XCTFail("No data can be received from invalid url")
             } else if let networkError = error as? NetworkError {
                  switch networkError {
-                   case .invalidResponse, .noDataAvailable:
+                 case .invalidResponse, .noDataAvailable, .noInternetConnection:
                        XCTFail("Invalid URL error is expected")
                    case .invalidURL:
                        promise.fulfill()
