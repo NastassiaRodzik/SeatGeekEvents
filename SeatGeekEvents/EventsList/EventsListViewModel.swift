@@ -42,6 +42,9 @@ final class EventsListViewModel: EventsListViewModelProtocol {
     private let connectivityManager: ConnectivityManager
     private var lastFailedRequest: (query: String, page: Int)? = nil
     
+    private var loadingEventsWorkItem: DispatchWorkItem?
+    private var isLoading = false
+    
     init(eventsFilter: DuplicatesFilter = EventsDuplicatesFilter(), connectivityManager: ConnectivityManager = ReachabilityManager()) {
         self.eventsFilter = eventsFilter
         self.connectivityManager = connectivityManager
@@ -69,8 +72,12 @@ final class EventsListViewModel: EventsListViewModelProtocol {
                         self.loadEvents(with: lastRequest.query, page: lastRequest.page)
                     }
                     self.reloadVisibleImages()
-                } else  {
-                    // TODO: stop loading if loading and show error?
+                } else {
+                    if self.isLoading {
+                        self.loadingEventsWorkItem?.cancel()
+                        self.error.value = NetworkError.noInternetConnection
+                        self.lastFailedRequest = (self.searchString.value!, self.currentPage)
+                    }
                 }
         }
         [connectivityDisposable, searchStringDisposable, indexPathDisposable].forEach({ $0.dispose(in: disposeBag) })
@@ -89,53 +96,57 @@ final class EventsListViewModel: EventsListViewModelProtocol {
     }
     
     private func loadEvents(with searchString: String, page: Int = 1) {
-        let isConnectedToInternet = connectivityManager.isConnected.value
-        guard isConnectedToInternet else {
-            error.value = NetworkError.noInternetConnection
-            lastFailedRequest = (searchString, page)
-            if page == 1 {
-                self.events.removeAll()
-            }
-            return
-        }
-        EventsClient().loadData(searchString: searchString, page: page) { [weak self] (eventsResponse, error) in
-            
+        loadingEventsWorkItem = DispatchWorkItem(block: { [weak self] in
             guard let self = self else { return }
-            if let error = error {
-                self.error.value = error
-                self.isNewPageLoading = false
-                // TODO: do we need to update page in this case? what if it is > 1 ?
-                self.currentPage = page
+            let isConnectedToInternet = self.connectivityManager.isConnected.value
+            guard isConnectedToInternet else {
+                self.error.value = NetworkError.noInternetConnection
+                self.lastFailedRequest = (searchString, page)
                 if page == 1 {
                     self.events.removeAll()
                 }
                 return
             }
-            guard var events = eventsResponse?.events, events.count > 0 else {
-                self.isNoEventsFound.value = true
-                self.events.removeAll()
-                self.isNewPageLoading = false
+            self.isLoading = true
+            EventsClient().loadData(searchString: searchString, page: page) { [weak self] (eventsResponse, error) in
+                guard let self = self else { return }
+                self.isLoading = false
+                if let error = error {
+                    self.error.value = error
+                    self.isNewPageLoading = false
+                    self.currentPage = page
+                    if page == 1 {
+                        self.events.removeAll()
+                    }
+                    return
+                }
+                guard var events = eventsResponse?.events, events.count > 0 else {
+                    self.isNoEventsFound.value = true
+                    self.events.removeAll()
+                    self.isNewPageLoading = false
+                    self.currentPage = page
+                    return
+                }
+                self.isNoEventsFound.value = false
+                if page < 2 {
+                    self.eventsFilter.resetElementsIdentifiers()
+                }
+                
+                events = self.eventsFilter.filterDuplicates(from: events) as! [Event]
                 self.currentPage = page
-                return
-            }
-            self.isNoEventsFound.value = false
-            if page < 2 {
-                self.eventsFilter.resetElementsIdentifiers()
-            }
-            
-            events = self.eventsFilter.filterDuplicates(from: events) as! [Event]
-            self.currentPage = page
-            let eventsViewModels = events.map({ EventTableViewCellViewModel(event: $0)})
-            if page == 1 {
-               self.events.removeAll()
-               self.events.insert(contentsOf: eventsViewModels, at: 0)
-            } else {
-               let lastIndex = self.events.count - 1 > 0 ? self.events.count - 1 : 0
-               self.events.insert(contentsOf: eventsViewModels, at: lastIndex)
-            }
-            self.isNewPageLoading = false
+                let eventsViewModels = events.map({ EventTableViewCellViewModel(event: $0)})
+                if page == 1 {
+                   self.events.removeAll()
+                   self.events.insert(contentsOf: eventsViewModels, at: 0)
+                } else {
+                   let lastIndex = self.events.count - 1 > 0 ? self.events.count - 1 : 0
+                   self.events.insert(contentsOf: eventsViewModels, at: lastIndex)
+                }
+                self.isNewPageLoading = false
 
-        }
+            }
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: loadingEventsWorkItem!)
     }
     
     private func reloadVisibleImages() {
